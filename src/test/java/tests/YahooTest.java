@@ -35,7 +35,7 @@ public class YahooTest extends BaseTest{
 
     @Parameters(name = "{index}: Yahoo {0}")
     public static Iterable<Object[]> data() {
-        driver = WebDriverFactory.getChromeDriver();
+        driver = WebDriverFactory.getFirefoxDriver();
         YahooMainPage yahoo = new YahooMainPage(driver);
         yahoo.open();
         List<WebElement> menuItems = yahoo.getMainMenuItems();
