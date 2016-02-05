@@ -21,6 +21,10 @@ public abstract class BasePage {
         WebDriverWait wait = new WebDriverWait(driver, WAIT_TIME_SECONDS);
         wait.until(ExpectedConditions.visibilityOf(element));
     }
+    protected void waitForElementPresence(By locator){
+        WebDriverWait wait = new WebDriverWait(driver, WAIT_TIME_SECONDS);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+    }
 
     public void waitPageLoadingCompleted(){
         waitPageLoadingCompleted(WAIT_TIME_SECONDS);

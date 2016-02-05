@@ -25,7 +25,7 @@ public class UserNascar {
 
     @Override
     public String toString(){
-        return String.format("email : %s password : %s zip : %s", email, password, zip);
+        return String.format("(email : %s ; password : %s ; zip : %s)", email, password, zip);
     }
 
 }
