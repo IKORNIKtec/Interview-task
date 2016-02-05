@@ -9,6 +9,8 @@ import org.openqa.selenium.support.FindBy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pages.BasePage;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class YahooMainPage extends BasePage {
@@ -16,15 +18,11 @@ public class YahooMainPage extends BasePage {
     private final String MENU_ITEM_LOCATOR = "//*[@id='Navigation']//span[contains(.,'%s')]";
     private final String SEE_MORE_MENU_ITEM_LOCATOR = "//*[contains(@class,'js-navlinks-seemore-menu')]//span[contains(.,'%s')]";
 
-    @FindBy(xpath = "//*[@id='Navigation']//span")
+    @FindBy(xpath="//*[contains(@class,'navlinks-list')]//li")
     List<WebElement> menuItems;
-
-//    @FindBy(css = ".navlist li[style=''] span")
-//    List<WebElement> menuItems;
 
     @FindBy(css = ".js-navlinks-seemore-menu span")
     List<WebElement> seeMoreMenuItems;
-
 
     @FindBy(css = "[aria-label='More Navlinks']")
     WebElement moreYahooLink;
@@ -33,16 +31,25 @@ public class YahooMainPage extends BasePage {
         super(driver);
     }
 
-    public List<WebElement> getSiteLinks(){
-        return menuItems;
+    public List<WebElement> getMainMenuItems(){
+        List<WebElement> items = new ArrayList<WebElement>();
+        int i=0;
+        for(WebElement e: menuItems){
+            if(e.getCssValue("display").equals("list-item")){
+                items.add(e.findElement(By.cssSelector("span")));
+            }
+        }
+        return items;
     }
-    public List<WebElement> getMoreSiteLinks(){
+
+    public List<WebElement> getMoreMenuItems(){
         return seeMoreMenuItems;
     }
 
     public void open(String url){
         driver.get(url);
     }
+
     public void open(){
         open(ConfigProperties.YAHOO_BASE_URL);
     }
@@ -65,12 +72,6 @@ public class YahooMainPage extends BasePage {
             getNavigationMenuItem(menuName).click();
         }
         logger.info("Menu item '{}' was been clicked", menuName);
-    }
-
-    public List<WebElement> getAllMenuItems(){
-        List<WebElement> allItems =menuItems;
-        allItems.addAll(seeMoreMenuItems);
-        return allItems;
     }
 
 }
