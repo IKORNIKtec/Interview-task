@@ -1,59 +1,62 @@
 package pages.nascar;
 
+import config.ConfigProperties;
+import model.nascar.UserNascar;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.Select;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import pages.BasePage;
 
 public class NascarMainPage extends BasePage {
+    private static final Logger logger = LoggerFactory.getLogger(NascarMainPage.class);
+    private NascarRegistrationForm registerForm;
+    private NascarLoginForm loginForm;
 
-    @FindBy(css=".navigationLinks [href~='/Login.aspx']")
-    WebElement manageMyBookingBtn;
+    @FindBy(css="#registerOrLogin .gigyaRegisterDialog")
+    WebElement registerButton;
 
-    @FindBy(id="sddDepartureAirportID")
-    WebElement fromDropdown;
+    @FindBy(css="#registerOrLogin .gigyaLoginDialog")
+    WebElement loginButton;
 
-    @FindBy(id="acpGeographyLevel2ID")
-    WebElement destinationField;
-
-    @FindBy(xpath="//*[@id='acpGeographyLevel2ID_Results']/div[1]/span[1]")
-    WebElement destinationResultSuggestingField;
-
-    @FindBy(id="btnSearch")
-    WebElement searchBtn;
-
-    @FindBy(id="calDepartureDate_MonthYear")
-    WebElement monthDropdown;
-
-    @FindBy(id="calDepartureDate_Day")
-    WebElement dayDropdown;
-
-    @FindBy(className="warning")
-    WebElement warningMessage;
 
     public NascarMainPage(WebDriver driver) {
         super(driver);
+        registerForm = new NascarRegistrationForm(driver);
+        loginForm = new NascarLoginForm(driver);
     }
 
-    public void clickManageMyBooking() {
-        manageMyBookingBtn.click();
+    @Override
+    public String getBaseUrl() {
+        return ConfigProperties.NASCAR_BASE_URL;
     }
 
-    public void selectFrom(String value){
-        waitForElementPresence(fromDropdown);
-        Select from = new Select(fromDropdown);
-        from.selectByVisibleText(value);
+    public void clickRegisterButton() {
+        registerButton.click();
     }
 
-    public void typeDestination(String value) {
-        destinationField.sendKeys(value);
-        waitForElementPresence(destinationResultSuggestingField);
-        destinationResultSuggestingField.click();
+    public void registerUser(UserNascar user) {
+        logger.info("Register user {}", user.toString());
+        clickRegisterButton();
+        registerForm.fillForm(user);
+        registerForm.clickSubmit();
     }
 
-    public void clickSearchButton() {
-        searchBtn.click();
+
+    public void login(UserNascar user) {
+        loginButton.click();
+        loginForm.fillForm(user);
+        loginForm.clickSubmit();
+    }
+
+    public void logout() {
+    }
+
+    public boolean isUserLoggedIn() {
+
+        return false;
     }
 }
 

@@ -1,5 +1,6 @@
 package pages.nascar;
 
+import model.nascar.UserNascar;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -8,52 +9,43 @@ import pages.BasePage;
 
 public class NascarRegistrationForm extends BasePage {
 
-    @FindBy(css=".navigationLinks [href~='/Login.aspx']")
-    WebElement manageMyBookingBtn;
+    @FindBy(css=".gigya-screen-dialog-inner .gigya-register-form input[data-gigya-name='email']")
+    WebElement emailField;
 
-    @FindBy(id="sddDepartureAirportID")
-    WebElement fromDropdown;
+    @FindBy(css=".gigya-screen-dialog-inner .gigya-register-form input[data-gigya-name='password']")
+    WebElement passwordField;
 
-    @FindBy(id="acpGeographyLevel2ID")
-    WebElement destinationField;
+    @FindBy(css=".gigya-screen-dialog-inner .gigya-register-form input[data-gigya-name='zip']")
+    WebElement zipField;
 
-    @FindBy(xpath="//*[@id='acpGeographyLevel2ID_Results']/div[1]/span[1]")
-    WebElement destinationResultSuggestingField;
+    @FindBy(css=".gigya-screen-dialog-inner .gigya-register-form input[data-gigya-name='data.terms']")
+    WebElement privacyCheckbox;
 
-    @FindBy(id="btnSearch")
-    WebElement searchBtn;
-
-    @FindBy(id="calDepartureDate_MonthYear")
-    WebElement monthDropdown;
-
-    @FindBy(id="calDepartureDate_Day")
-    WebElement dayDropdown;
-
-    @FindBy(className="warning")
-    WebElement warningMessage;
+    @FindBy(css=".gigya-screen-dialog-inner .gigya-register-form .gigya-input-submit")
+    WebElement submitButton;
 
     public NascarRegistrationForm(WebDriver driver) {
         super(driver);
     }
 
-    public void clickManageMyBooking() {
-        manageMyBookingBtn.click();
+    @Override
+    public String getBaseUrl() {
+        return null;
     }
 
-    public void selectFrom(String value){
-        waitForElementPresence(fromDropdown);
-        Select from = new Select(fromDropdown);
-        from.selectByVisibleText(value);
+
+    public void clickSubmit() {
+        submitButton.click();
     }
 
-    public void typeDestination(String value) {
-        destinationField.sendKeys(value);
-        waitForElementPresence(destinationResultSuggestingField);
-        destinationResultSuggestingField.click();
+    public void fillForm(UserNascar user) {
+        emailField.sendKeys(user.getEmail());
+        passwordField.sendKeys(user.getPassword());
+        zipField.sendKeys(user.getZip());
+        acceptPrivacy();
     }
-
-    public void clickSearchButton() {
-        searchBtn.click();
+    public void acceptPrivacy() {
+        privacyCheckbox.click();
     }
 }
 

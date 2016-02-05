@@ -31,6 +31,11 @@ public class YahooMainPage extends BasePage {
         super(driver);
     }
 
+    @Override
+    public String getBaseUrl() {
+        return ConfigProperties.YAHOO_BASE_URL;
+    }
+
     public List<WebElement> getMainMenuItems(){
         List<WebElement> items = new ArrayList<WebElement>();
         int i=0;
@@ -44,14 +49,6 @@ public class YahooMainPage extends BasePage {
 
     public List<WebElement> getMoreMenuItems(){
         return seeMoreMenuItems;
-    }
-
-    public void open(String url){
-        driver.get(url);
-    }
-
-    public void open(){
-        open(ConfigProperties.YAHOO_BASE_URL);
     }
 
     private WebElement getNavigationMenuItem(String menuName) {

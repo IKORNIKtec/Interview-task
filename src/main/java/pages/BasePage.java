@@ -1,5 +1,6 @@
 package pages;
 
+import config.ConfigProperties;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedCondition;
@@ -49,6 +50,11 @@ public abstract class BasePage {
 
     public boolean isPageLoaded(){
         return ((JavascriptExecutor)driver).executeScript("return document.readyState").equals("complete");
+    }
+    public abstract String getBaseUrl();
+
+    public void open() {
+        driver.get(getBaseUrl());
     }
 }
 
