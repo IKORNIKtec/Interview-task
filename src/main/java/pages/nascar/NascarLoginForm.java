@@ -14,7 +14,7 @@ public class NascarLoginForm extends BasePage {
     @FindBy(css="#gigya-login-screen input[name='password']")
     WebElement passwordField;
 
-    @FindBy(css="#gigya-login-screen input[name='gigya-input-submit']")
+    @FindBy(css="#gigya-login-screen .gigya-input-submit")
     WebElement submitButton;
 
     public NascarLoginForm(WebDriver driver) {

@@ -10,4 +10,8 @@ public class NascarUserFactory {
        String zip = RandomStringUtils.random(10, false, true);
        return new UserNascar(email, password, zip);
    }
+    public static UserNascar getExistingUser(){
+        return new UserNascar("5oVhUey4GA@gmail.com", "0fd5WXW0Pv", "5173622681");
+    }
+
 }

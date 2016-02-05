@@ -2,6 +2,7 @@ package pages.nascar;
 
 import config.ConfigProperties;
 import model.nascar.UserNascar;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -21,6 +22,11 @@ public class NascarMainPage extends BasePage {
     @FindBy(css="#registerOrLogin .gigyaLoginDialog")
     WebElement loginButton;
 
+    @FindBy(css="#myGarage a")
+    WebElement myProfileButton;
+
+    @FindBy(css="#myProfile [value='Logout']")
+    WebElement logoutButton;
 
     public NascarMainPage(WebDriver driver) {
         super(driver);
@@ -49,14 +55,19 @@ public class NascarMainPage extends BasePage {
         loginButton.click();
         loginForm.fillForm(user);
         loginForm.clickSubmit();
+        waitPageLoadingCompleted(100);
     }
 
     public void logout() {
+        waitForElementPresence(myProfileButton);
+        myProfileButton.click();
+        waitForElementPresence(logoutButton);
+        logoutButton.click();
+
     }
 
     public boolean isUserLoggedIn() {
-
-        return false;
+        return !loginButton.isDisplayed();
     }
 }
 

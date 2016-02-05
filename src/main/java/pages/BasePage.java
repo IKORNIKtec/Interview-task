@@ -8,18 +8,13 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public abstract class BasePage {
-    public static long WAIT_TIME_SECONDS = 30;
-    private static By WARN_LOCATOR = By.className("warning");
+    public static long WAIT_TIME_SECONDS = 70;
+
     protected WebDriver driver;
 
     public BasePage(WebDriver driver){
         this.driver = driver;
         PageFactory.initElements(driver, this);
-    }
-
-    public boolean isWarningDisplayed() {
-        waitPageLoadingCompleted();
-        return driver.findElements(WARN_LOCATOR).size()>0;
     }
 
     protected void waitForElementPresence(WebElement element){
